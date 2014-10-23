@@ -75,6 +75,21 @@ install rhino
 install tree
 install webkit2png
 install zopfli
+install ctags
+install irssi
+install jsmin
+install mysql
+install openssl
+install python
+install ruby
+install tree
+install vim
+install wget
+install wemux
+install tmux
+install watch
+install postgresql
+
 
 install homebrew/versions/lua52
 
