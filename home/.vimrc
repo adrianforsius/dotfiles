@@ -15,7 +15,7 @@
     Plugin 'Lokaltog/vim-easymotion'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
-    call pathogen#infect()
+    "call pathogen#infect()
 "}}}
 
 "VIm general {{{
@@ -125,9 +125,10 @@
 
 "Color/Theme {{{
     "Enable colorscheme
-    syntax on
-    colorscheme monokai
-    set t_Co=256
+    "syntax on
+    set background=dark
+    colorscheme molokai
+    "set t_Co=256
 "}}}
 
 "Search {{{
