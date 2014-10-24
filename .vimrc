@@ -100,6 +100,29 @@
     nnoremap <leader>W :match Error /\v\s+$/<cr>
     nnoremap <leader>w :%s/\v\s+$//<cr>
     nnoremap <leader>g :execute "grep -R ". shellescape("<cWORD>") . " ."<cr>
+    " Easier go to file
+    nnoremap <leader>e :e ~/
+    nnoremap <leader>m :cd /cygdrive/c/shortcuts/
+    " Simplifying windo movement
+    noremap <C-h> <C-w>h
+    noremap <C-j> <C-w>j
+    noremap <C-k> <C-w>k
+    noremap <C-l> <C-w>l
+    "Always search in very magic mode
+    nnoremap / /\v
+    vnoremap / /\v
+
+
+"}}}
+
+"VIm disable for learning {{{
+    "disable arrow keys
+    noremap <up> <nop>
+    noremap <down> <nop>
+    noremap <left> <nop>
+    noremap <right> <nop>
+    inoremap <up> <nop>
+    inoremap <down> <nop>
     " Simplifying windo movement
     noremap <C-h> <C-w>h
     noremap <C-j> <C-w>j
