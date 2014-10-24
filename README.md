@@ -8,5 +8,5 @@ Use the [homesick gem](https://github.com/technicalpickles/homesick) to install 
 
     $ gem install homesick
     $ homesick clone adrianforsius/dotfiles
-    $ homesick symlink adrianforsius/dotfiles
+    $ homesick symlink dotfiles
 
