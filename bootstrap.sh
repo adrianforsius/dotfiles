@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#Export DOTFILE-name
+DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+export DOTFILES=$DOTFILES;
+
 cd "$(dirname "${BASH_SOURCE}")";
 
 git pull origin master;
