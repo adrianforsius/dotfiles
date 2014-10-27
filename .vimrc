@@ -101,8 +101,9 @@
     nnoremap <leader>w :%s/\v\s+$//<cr>
     nnoremap <leader>g :execute "grep -R ". shellescape("<cWORD>") . " ."<cr>
     " Easier go to file
-    nnoremap <leader>e :e ~/
     nnoremap <leader>m :cd /cygdrive/c/shortcuts/
+    nnoremap <leader>e :e ~/
+    nnoremap <leader>d :vert diffsplit ~/
     " Simplifying windo movement
     noremap <C-h> <C-w>h
     noremap <C-j> <C-w>j
@@ -148,10 +149,10 @@
 
 "Color/Theme {{{
     "Enable colorscheme
-    "syntax on
+    syntax on
     set background=dark
     colorscheme molokai
-    "set t_Co=256
+    set t_Co=256
 "}}}
 
 "Search {{{
