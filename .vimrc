@@ -214,8 +214,8 @@ nnoremap <leader>u :GundoToggle<cr>
         let g:indentLine_char = '¦'
     "}}}
     "easyMotion {{{
-        map  _ <Plug>(easymotion-sn)
-        onoremap _ <Plug>(easymotion-tn)
+        map  ctrl-; <Plug>(easymotion-sn)
+        onoremap ctrl-; <Plug>(easymotion-tn)
     "}}}
     "ctrlP {{{
         "CtrlP settings
@@ -281,3 +281,15 @@ nnoremap <leader>u :GundoToggle<cr>
         autocmd BufWritePost .vimrc,_vimrc,vimrmrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
     augroup END
 "}}}
+
+" Functions
+function! Dotfiles(file)
+    if filereadable($HOME."/".a:file)
+        let homefile = $HOME."/".a:file
+        let dotfile = $DOTFILES."/".a:file
+        execute ":e ".homefile
+        execute ":vert diffsplit ".dotfile
+    else
+        echom 'No such dotfile'
+    endif
+endfunction
