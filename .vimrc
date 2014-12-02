@@ -94,14 +94,15 @@
     "Open vimrc settings
     nnoremap <leader>sv :split $MYVIMRC<cr>
     "Save session with window setup
-    nnoremap <leader>s :mksession<cr>
-    "Future ag-search
-    nnoremap <leader>a :Ag
+    nnoremap <leader>s :mksession<cr> "Future ag-search nnoremap <leader>a :Ag
     nnoremap <leader>W :match Error /\v\s+$/<cr>
     nnoremap <leader>w :%s/\v\s+$//<cr>
-    nnoremap <leader>g :execute "grep -R ". shellescape("<cWORD>") . " ."<cr>
+    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR> 
+    " bind \ (backward slash) to grep shortcut
+    command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+    nnoremap \ :Ag<SPACE>
     " Easier go to file
-    nnoremap <leader>m :cd /cygdrive/c/shortcuts/
+    nnoremap <leader>m :cd ~/
     nnoremap <leader>e :e ~/
     nnoremap <leader>d :vert diffsplit ~/
     " Simplifying windo movement
@@ -147,13 +148,6 @@
     inoremap <right> <nop>
 "}}}
 
-"Color/Theme {{{
-    "Enable colorscheme
-    syntax on
-    set background=dark
-    colorscheme molokai
-    set t_Co=256
-"}}}
 
 "Search {{{
     "Searching parameters to search for case sensitive only when using capital
@@ -177,21 +171,40 @@
 "Supposedly this will give an undo tree however Im not sure if working
 nnoremap <leader>u :GundoToggle<cr>
 
+"Color/Theme {{{
+    "Enable colorscheme
+    syntax on
+    set background=dark
+    colorscheme molokai
+    set t_Co=256
+"}}}
 "Statusline {{{
     "first, enable status line always
+    set noruler
     set laststatus =2
     set statusline =
-    set statusline +=\ %n\ %*            "buffer number
-    set statusline +=%{&ff}%*            "file format
-    set statusline +=%y%*                "file type
-    set statusline +=\ %{''.(&fenc!=''?&fenc:&enc).''} "Fle encoding
+    set statusline +=%1*\ %n\ %*            "buffer number
+    set statusline +=%2*%r      "read only flag
+    set statusline +=%3*%{&ff}%*            "file format
+    set statusline +=%4*%y%*                "file type
+    set statusline +=%5*\ %{''.(&fenc!=''?&fenc:&enc).''} "Fle encoding
     set statusline +=\ %<%F%*            "full path
     set statusline +=%m%*                "modified flag
     set statusline +=%=%5l%*             "current line
     set statusline +=/%L%*               "total lines
     set statusline +=%4v\ %*             "virtual column number
     set statusline +=*0x%04B\ %*          "character under cursor
-    hi statusline guibg=DarkRed ctermfg=2 guifg=Black ctermbg=0
+    set statusline+=%5*\ %P\    "percent through file
+    hi User1 guifg=#ffdad8  guibg=#880c0e
+    hi User2 guifg=#000000  guibg=#F4905C
+    hi User3 guifg=#292b00  guibg=#f4f597
+    hi User4 guifg=#112605  guibg=#aefe7B
+    hi User5 guifg=#051d00  guibg=#7dcc7d
+    hi User6 guifg=#051d00  guibg=#7dcc7d
+    hi User7 guifg=#ffffff  guibg=#880c0e gui=bold
+    hi User8 guifg=#ffffff  guibg=#5b7fbb
+    hi User9 guifg=#ffffff  guibg=#810085
+    hi User0 guifg=#ffffff  guibg=#094afe
 "}}}
 
 "surrondings {{{
@@ -293,3 +306,13 @@ function! Dotfiles(file)
         echom 'No such dotfile'
     endif
 endfunction
+if executable('ag')
+    " Note we extract the column as well as the file and line number
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c%m
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
