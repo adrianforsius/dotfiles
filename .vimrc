@@ -12,7 +12,9 @@
     Plugin 'kien/ctrlp.vim'
     "Plugin 'scrooloose/syntastic'
     Plugin 'Yggdroot/indentLine'
+    " VIM motion requires vim 7.3
     Plugin 'Lokaltog/vim-easymotion'
+    Plugin 'editorconfig/editorconfig-vim'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
     "call pathogen#infect()
@@ -99,7 +101,7 @@
     nnoremap <leader>s :mksession<cr> "Future ag-search nnoremap <leader>a :Ag
     nnoremap <leader>W :match Error /\v\s+$/<cr>
     nnoremap <leader>w :%s/\v\s+$//<cr>
-    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR> 
+    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
     " bind \ (backward slash) to grep shortcut
     command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
     nnoremap \ :Ag<SPACE>
@@ -169,15 +171,15 @@ nnoremap <leader>u :GundoToggle<cr>
     set statusline +=*0x%04B\ %*          "character under cursor
     set statusline+=%5*\ %P\    "percent through file
 
-    hi User1 ctermfg=11 ctermbg=000000  
-    hi User2 ctermfg=000 ctermbg=000000  
-    hi User3 ctermfg=29 ctermbg=000000  
-    hi User4 ctermfg=112 ctermbg=000000  
-    hi User5 ctermfg=51 ctermbg=000000  
+    hi User1 ctermfg=11 ctermbg=000000
+    hi User2 ctermfg=000 ctermbg=000000
+    hi User3 ctermfg=29 ctermbg=000000
+    hi User4 ctermfg=112 ctermbg=000000
+    hi User5 ctermfg=51 ctermbg=000000
     hi User7 ctermfg=222 ctermbg=000000  gui=bold
-    hi User8 ctermfg=33 ctermbg=000000  
-    hi User9 ctermfg=44 ctermbg=000000  
-    hi User0 ctermfg=55 ctermbg=000000  
+    hi User8 ctermfg=33 ctermbg=000000
+    hi User9 ctermfg=44 ctermbg=000000
+    hi User0 ctermfg=55 ctermbg=000000
     hi StatusLine ctermbg=darkgreen ctermfg=black
 "}}}
 
