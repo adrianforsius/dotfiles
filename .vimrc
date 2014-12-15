@@ -19,6 +19,8 @@
 "}}}
 
 "VIm general {{{
+    "set clpboard
+    set clipboard=unnamedplus
     "be iMproved, required
     set nocompatible
     "Filetype indent with plugin possibility
@@ -42,8 +44,6 @@
     set shiftwidth=4
     "Set backspace to more logically use (delete)
     set backspace=2
-    "Set faster ESC
-    inoremap <leader>. <esc>
     "tabs are spaces
     set expandtab
     "Enable cmd
@@ -82,6 +82,8 @@
 "}}}
 
 "General remapping {{{
+    "Set faster ESC
+    inoremap <leader>. <esc>
     "Tab overrides
     nnoremap <S-Tab> <<
     nnoremap <Tab> >>
@@ -117,24 +119,6 @@
 
 "}}}
 
-"VIm disable for learning {{{
-    "disable arrow keys
-    noremap <up> <nop>
-    noremap <down> <nop>
-    noremap <left> <nop>
-    noremap <right> <nop>
-    inoremap <up> <nop>
-    inoremap <down> <nop>
-    " Simplifying windo movement
-    noremap <C-h> <C-w>h
-    noremap <C-j> <C-w>j
-    noremap <C-k> <C-w>k
-    noremap <C-l> <C-w>l
-    "Always search in very magic mode
-    nnoremap / /\v
-    vnoremap / /\v
-
-"}}}
 
 
 
@@ -184,16 +168,17 @@ nnoremap <leader>u :GundoToggle<cr>
     set statusline +=%4v\ %*             "virtual column number
     set statusline +=*0x%04B\ %*          "character under cursor
     set statusline+=%5*\ %P\    "percent through file
-    hi User1 guifg=#ffdad8  guibg=#880c0e
-    hi User2 guifg=#000000  guibg=#F4905C
-    hi User3 guifg=#292b00  guibg=#f4f597
-    hi User4 guifg=#112605  guibg=#aefe7B
-    hi User5 guifg=#051d00  guibg=#7dcc7d
-    hi User6 guifg=#051d00  guibg=#7dcc7d
-    hi User7 guifg=#ffffff  guibg=#880c0e gui=bold
-    hi User8 guifg=#ffffff  guibg=#5b7fbb
-    hi User9 guifg=#ffffff  guibg=#810085
-    hi User0 guifg=#ffffff  guibg=#094afe
+
+    hi User1 ctermfg=11 ctermbg=000000  
+    hi User2 ctermfg=000 ctermbg=000000  
+    hi User3 ctermfg=29 ctermbg=000000  
+    hi User4 ctermfg=112 ctermbg=000000  
+    hi User5 ctermfg=51 ctermbg=000000  
+    hi User7 ctermfg=222 ctermbg=000000  gui=bold
+    hi User8 ctermfg=33 ctermbg=000000  
+    hi User9 ctermfg=44 ctermbg=000000  
+    hi User0 ctermfg=55 ctermbg=000000  
+    hi StatusLine ctermbg=darkgreen ctermfg=black
 "}}}
 
 "surrondings {{{
@@ -216,12 +201,12 @@ nnoremap <leader>u :GundoToggle<cr>
         let g:indentLine_char = '¦'
     "}}}
     "easyMotion {{{
-        map  ctrl-; <Plug>(easymotion-sn)
-        onoremap ctrl-; <Plug>(easymotion-tn)
+        map <leader><leader> <Plug>(easymotion-sn)
+        "onoremap ctrl-; <Plug>(easymotion-tn)
     "}}}
     "ctrlP {{{
         "CtrlP settings
-        let g:ctrlp_match_window = 'bottom, order:ttb'
+        let g:ctrlp_match_window = 'bottom, order:ttb,min:1,max:20,results:20'
         let g:ctrlp_switch_buffer = 0
         let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
         let g:ctrlp_working_path_mode = 0
