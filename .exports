@@ -25,4 +25,4 @@ export GREP_OPTIONS="--color=auto";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 
 # Custom exports
-export DOTFILES="~/dotfiles"
+export DOTFILES="$HOME/dotfiles/"
