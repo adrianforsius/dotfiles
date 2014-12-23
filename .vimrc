@@ -22,7 +22,7 @@
 
 "VIm general {{{
     "set clpboard
-    set clipboard=unnamedplus
+    set clipboard=unnamed
     "be iMproved, required
     set nocompatible
     "Filetype indent with plugin possibility
