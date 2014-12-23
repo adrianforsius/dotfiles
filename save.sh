@@ -5,7 +5,9 @@ function doIt() {
     for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
         cp "$file" ${DOTFILES}
     done;
-    echo "Files copied successfully!";
+    green='\033[1;32m'
+    NC='\033[0m'
+    echo -e "${green}Files copied successfully!${NC}";
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
