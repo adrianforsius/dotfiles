@@ -12,7 +12,6 @@
     Plugin 'kien/ctrlp.vim'
     "Plugin 'scrooloose/syntastic'
     Plugin 'Yggdroot/indentLine'
-    " VIM motion requires vim 7.3
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'editorconfig/editorconfig-vim'
     call vundle#end()
@@ -282,6 +281,22 @@ function! Dotfiles(file)
         echom 'No such dotfile'
     endif
 endfunction
+" Parse gitignore
+let filename = '.gitignore'
+if filereadable(filename)
+    let igstring = ''
+    for oline in readfile(filename)
+        let line = substitute(oline, '\s|\n|\r', '', "g")
+        if line =~ '^#' | con | endif
+        if line == '' | con  | endif
+        if line =~ '^!' | con  | endif
+        if line =~ '/$' | let igstring .= "," . line . "*" | con | endif
+        let igstring .= "," . line
+    endfor
+    let execstring = "set wildignore=".substitute(igstring, '^,', '', "g")
+    execute execstring
+endif
+" Use AG instead of grep (fastert) if executeable
 if executable('ag')
     " Note we extract the column as well as the file and line number
     set grepprg=ag\ --nogroup\ --nocolor\ --column
