@@ -2,7 +2,7 @@
 cd ~
 
 function doIt() {
-    for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,save}; do
+    for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
         cp "$file" ${DOTFILES}
     done;
 }
