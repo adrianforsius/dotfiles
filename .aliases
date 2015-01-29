@@ -142,3 +142,6 @@ alias reload="exec $SHELL -l"
 
 # Faster npm for Europeans
 command -v npm > /dev/null && alias npme="npm --registry http://registry.npmjs.eu/"
+
+#Git
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit"
