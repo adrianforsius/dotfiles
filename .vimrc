@@ -14,12 +14,15 @@
     Plugin 'Yggdroot/indentLine'
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'editorconfig/editorconfig-vim'
+    Plugin 'bling/vim-airline'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
     "call pathogen#infect()
 "}}}
 
 "VIm general {{{
+    "set cursor to always have a distance to borders
+    set scrolloff=3
     set fileencoding=utf-8
     set encoding=utf-8
     "set clpboard
@@ -148,40 +151,30 @@
 nnoremap <leader>u :GundoToggle<cr>
 
 "Color/Theme {{{
-    "Enable colorscheme
     syntax on
-    set background=dark
-    colorscheme molokai
     set t_Co=256
+    set background=dark
+    colorscheme solarized
+    let g:solarized_visibility = "high"
+    let g:solarized_contrast = "high"
+    let g:solarized_termcolors = 16
+    "auto cmd to keep colors
+    augroup airline
+        autocmd!
+        let g:airline_left_sep=''
+        let g:airline_right_sep=''
+        let g:airline_detect_modified=1
+        let g:airline_powerline_fonts=1
+        let g:airline_powerline_symbols='fancy'
+        let g:airline_theme='solarized'
+    augroup END
+    "Statusbar theme
+    "Enable colorscheme
 "}}}
 "Statusline {{{
     "first, enable status line always
     set noruler
     set laststatus =2
-    set statusline =
-    set statusline +=%1*\ %n\ %*            "buffer number
-    set statusline +=%2*%r      "read only flag
-    set statusline +=%3*%{&ff}%*            "file format
-    set statusline +=%4*%y%*                "file type
-    set statusline +=%5*\ %{''.(&fenc!=''?&fenc:&enc).''} "Fle encoding
-    set statusline +=\ %<%F%*            "full path
-    set statusline +=%m%*                "modified flag
-    set statusline +=%=%5l%*             "current line
-    set statusline +=/%L%*               "total lines
-    set statusline +=%4v\ %*             "virtual column number
-    set statusline +=*0x%04B\ %*          "character under cursor
-    set statusline+=%5*\ %P\    "percent through file
-
-    hi User1 ctermfg=11 ctermbg=000000
-    hi User2 ctermfg=000 ctermbg=000000
-    hi User3 ctermfg=29 ctermbg=000000
-    hi User4 ctermfg=112 ctermbg=000000
-    hi User5 ctermfg=51 ctermbg=000000
-    hi User7 ctermfg=222 ctermbg=000000  gui=bold
-    hi User8 ctermfg=33 ctermbg=000000
-    hi User9 ctermfg=44 ctermbg=000000
-    hi User0 ctermfg=55 ctermbg=000000
-    hi StatusLine ctermbg=darkgreen ctermfg=black
 "}}}
 
 "surrondings {{{
@@ -251,6 +244,13 @@ nnoremap <leader>u :GundoToggle<cr>
     augroup END
 "}}}
 
+"Working directory {{{
+    augroup setWorkingDirectory
+        autocmd!
+        autocmd BufEnter * lcd %:p:h
+    augroup END
+"}}}
+
 "Commenting {{{
     "augroup commenting
         "autocmd!
@@ -266,9 +266,19 @@ nnoremap <leader>u :GundoToggle<cr>
     "augroup END
 "}}}
 "Vim util {{{
+    function! RefreshUI()
+        if exists(':AirlineRefresh')
+            AirlineRefresh
+        else
+            " Clear & redraw the screen, then redraw all
+            " statuslines.
+            redraw!
+            redrawstatus!
+        endif
+    endfunction
     augroup vim_util
         autocmd!
-        autocmd BufWritePost .vimrc,_vimrc,vimrmrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+        autocmd BufWritePost .vimrc,_vimrc,vimrmrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | :call RefreshUI()
     augroup END
 "}}}
 

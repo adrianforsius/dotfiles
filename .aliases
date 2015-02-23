@@ -145,3 +145,6 @@ command -v npm > /dev/null && alias npme="npm --registry http://registry.npmjs.e
 
 #Git
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit"
+
+#Copy working directory
+alias cpd='echo -en `pwd`/ | pbcopy -selection clipboard'
