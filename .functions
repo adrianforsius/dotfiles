@@ -245,10 +245,23 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 goo.gl() {
-    [[ ! $1 ]] && { echo -e "Usage: goo.gl [URL]\n\nShorten a URL using the Google URL Shortener service (http://goo.gl)."; return; }
-    curl -qsSL -m10 --connect-timeout 10 \
-        'https://www.googleapis.com/urlshortener/v1/url' \
-        -H 'Content-Type: application/json' \
-        -d '{"longUrl":"'${1//\"/\\\"}'"}' |
-        perl -ne 'if(m/^\s*"id":\s*"(.*)",?$/i) { print $1 }' | pbcopy
+	[[ ! $1 ]] && { echo -e "Usage: goo.gl [URL]\n\nShorten a URL using the Google URL Shortener service (http://goo.gl)."; return; }
+	curl -qsSL -m10 --connect-timeout 10 \
+		'https://www.googleapis.com/urlshortener/v1/url' \
+		-H 'Content-Type: application/json' \
+		-d '{"longUrl":"'${1//\"/\\\"}'"}' |
+		perl -ne 'if(m/^\s*"id":\s*"(.*)",?$/i) { print $1 }' | pbcopy
+}
+
+function git-branch-current() {
+	printf "%s\n" $(git branch 2> /dev/null | grep -e ^* | tr -d "\* ")
+}
+
+function git-log-last-pushed-hash() {
+	local currentBranch=$(git-branch-current);
+	git log --format="%h" -n 1 ${currentBranch}
+}
+
+function git-rebase-unpushed() {
+	git rebase --interactive $(git-log-last-pushed-hash)
 }

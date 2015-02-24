@@ -1,6 +1,6 @@
 # Add xon/xonf for terminal output for reverse-i-search
 stty -ixon
 # Now the terminal will behave like vi
-set -o vi
+#set -o vi
 # Enable insert/command-mode to promt when in vi mode
 set show-mode-in-prompt on

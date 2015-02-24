@@ -15,6 +15,7 @@
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'editorconfig/editorconfig-vim'
     Plugin 'bling/vim-airline'
+    Plugin 'ltercation/vim-colors-solarized'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
     "call pathogen#infect()
@@ -69,9 +70,9 @@
     let maplocalleader="-"
     "Backup
     set backup
-    set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+    set backupdir=~/.vim-tmp,~/.vim/.tmp,~/tmp,/var/tmp,/tmp
     set backupskip=/tmp/*,/private/tmp/*
-    set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+    set directory=~/.vim-tmp,~/.vim/.tmp,~/tmp,/var/tmp,/tmp
     "Vim basic ignore windows paths and linux paths if cygwin
     set wildignore+=*/tmp/*,*/target/*,*/node_modules/*,*.so,*.swp,*.zip
     set wildignore+=*\\tmp\\*,*\\target\\*,*.swp,*.zip,*.exe
@@ -151,30 +152,27 @@
 nnoremap <leader>u :GundoToggle<cr>
 
 "Color/Theme {{{
-    syntax on
-    set t_Co=256
-    set background=dark
-    colorscheme solarized
-    let g:solarized_visibility = "high"
-    let g:solarized_contrast = "high"
-    let g:solarized_termcolors = 16
-    "auto cmd to keep colors
-    augroup airline
-        autocmd!
-        let g:airline_left_sep=''
-        let g:airline_right_sep=''
-        let g:airline_detect_modified=1
-        let g:airline_powerline_fonts=1
-        let g:airline_powerline_symbols='fancy'
-        let g:airline_theme='solarized'
-    augroup END
-    "Statusbar theme
     "Enable colorscheme
+    colorscheme solarized
+    "hi NonText term=bold cterm=bold ctermfg=1 gui=bold guifg=Black
+    "hi SpecialKey ctermfg=black
+    syntax on
+    set background=dark
+    set t_Co=256
+    let g:solarized_visibility = "normal"
+    let g:solarized_contrast = "normal"
+
+    let g:airline_left_sep=''
+    let g:airline_right_sep=''
+    let g:airline_detect_modified=1
+    let g:airline_powerline_fonts=1
+    let g:airline_powerline_symbols='fancy'
+    let g:airline_theme='solarized'
 "}}}
 "Statusline {{{
     "first, enable status line always
     set noruler
-    set laststatus =2
+    set laststatus=2
 "}}}
 
 "surrondings {{{
@@ -245,10 +243,10 @@ nnoremap <leader>u :GundoToggle<cr>
 "}}}
 
 "Working directory {{{
-    augroup setWorkingDirectory
-        autocmd!
-        autocmd BufEnter * lcd %:p:h
-    augroup END
+    "augroup setWorkingDirectory
+        "autocmd!
+        "autocmd BufEnter * lcd %:p:h
+    "augroup END
 "}}}
 
 "Commenting {{{

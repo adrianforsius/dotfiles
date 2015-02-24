@@ -2,7 +2,7 @@
 cd ~
 
 function doIt() {
-    for file in ~/.{path,bash_prompt,bash_profile,exports,aliases,functions,extra,vimrc,bashrc,inputrc,screenrc,gitconfig,curlrc,wgetrc}; do
+    for file in ~/.{path,bash_prompt,bash_profile,exports,aliases,functions,extra,vimrc,bashrc,inputrc,screenrc,gitconfig,curlrc,wgetrc,tmux.conf}; do
         cp "$file" ${DOTFILES}
     done;
     for file in ~/{brew.sh,save.sh}; do
