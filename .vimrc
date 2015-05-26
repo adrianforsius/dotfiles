@@ -44,7 +44,7 @@
     set number
     "Enable white characters
     set list
-    set listchars=tab:>-,trail:~,extends:>,precedes:<
+    set listchars=tab:→\ ,trail:~,extends:>,precedes:<
     "Set tabs
     set tabstop=4
     set softtabstop=4
@@ -121,9 +121,7 @@
     noremap <C-l> <C-w>l
     "Always search in very magic mode
     nnoremap / /\v
-    vnoremap / /\v
-
-
+    nnoremap <leader>yy :nonumber!
 "}}}
 
 
@@ -168,6 +166,7 @@ nnoremap <leader>u :GundoToggle<cr>
     let g:airline_powerline_fonts=1
     let g:airline_powerline_symbols='fancy'
     let g:airline_theme='solarized'
+    hi SpecialKey ctermfg=101 guifg=#649A9A
 "}}}
 "Statusline {{{
     "first, enable status line always
@@ -204,7 +203,7 @@ nnoremap <leader>u :GundoToggle<cr>
         let g:ctrlp_switch_buffer = 0
         let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
         let g:ctrlp_working_path_mode = 0
-        let g:ctrlp_by_filename = 1
+        let g:ctrlp_by_filename = 0
         let g:ctrlp_regexp = 1
         let g:ctrlp_map = '<c-p>'
         let g:ctrlp_cmd = 'CtrlPMixed'

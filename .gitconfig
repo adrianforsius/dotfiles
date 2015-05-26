@@ -158,3 +158,6 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+[user]
+	email = adrianforsius@gmail.com
+	name = adrianforsius
