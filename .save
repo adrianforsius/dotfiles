@@ -2,7 +2,7 @@
 cd ~
 
 function doIt() {
-    for file in ~/.{vimrc,path,bash_prompt,exports,aliases,functions,extra,save}; do
+    for file in ~/.{vimrc,path,bash_prompt,exports,aliases,functions,extra,save,linux,mac}; do
         cp "$file" ${DOTFILES}
     done;
 }

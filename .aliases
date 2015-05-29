@@ -162,3 +162,5 @@ alias cpd='echo -en `pwd`/ | pbcopy -selection clipboard'
 # gitalias hard='git reset --hard'
 # gitalias soft='git reset --soft'
 # gitalias scrap='git checkout HEAD'
+BOSS="boss"
+alias notify='echo "growling-like-a-$BOSS"'
