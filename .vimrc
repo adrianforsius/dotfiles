@@ -1,24 +1,28 @@
 "Vundle {{{
+    "Set filetype off to avoid errors
+    filetype off
     "set the runtime path to include Vundle and initialize
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
     "let Vundle manage Vundle, required
     Plugin 'gmarik/Vundle.vim'
-    "Plugin 'mattn/emmet-vim'
-    "Plugin 'tpope/vim-fugitive'
     Plugin 'scrooloose/nerdtree'
     Plugin 'tpope/vim-surround'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'kien/ctrlp.vim'
-    "Plugin 'scrooloose/syntastic'
     Plugin 'Yggdroot/indentLine'
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'editorconfig/editorconfig-vim'
+    Plugin 'tpope/vim-fugitive'
     Plugin 'bling/vim-airline'
-    Plugin 'ltercation/vim-colors-solarized'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'burke/matcher'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'git@scmcoord.com:sion.leroux/vim-blocket.git'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
-    "call pathogen#infect()
+    "Filetype indent with plugin possibility load after vundle to avoid errors
+    filetype indent plugin on
 "}}}
 
 "VIm general {{{
@@ -30,10 +34,6 @@
     set clipboard=unnamed
     "be iMproved, required
     set nocompatible
-    "Filetype indent with plugin possibility
-    filetype indent on
-    "Loads ftplugin.vim for plugin-filetype possibility
-    filetype plugin on
     "Keep indent when creating new line
     set autoindent
     "Activate basic indention
@@ -89,6 +89,12 @@
 "}}}
 
 "General remapping {{{
+    "remove trailing whitespace
+    nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+    "PHP mappgin
+    nnoremap <leader>.j :lnext<CR>
+    nnoremap <leader>o :e <C-R>=expand("%:p:h") . "/" <CR>
+    nnoremap <leader>n :sav <C-R>=expand("%:p:h") . "/" <CR>
     "Set faster ESC
     inoremap <leader>. <esc>
     "Tab overrides
@@ -121,7 +127,7 @@
     noremap <C-l> <C-w>l
     "Always search in very magic mode
     nnoremap / /\v
-    nnoremap <leader>yy :nonumber!
+    nnoremap <leader>yy :set nonumber!<CR>:set list!<CR>
 "}}}
 
 
@@ -166,6 +172,8 @@ nnoremap <leader>u :GundoToggle<cr>
     let g:airline_powerline_fonts=1
     let g:airline_powerline_symbols='fancy'
     let g:airline_theme='solarized'
+    let g:airline#extensions#syntastic#enabled = 1
+    let g:airline_section_warning = 'syntastic'
     hi SpecialKey ctermfg=101 guifg=#649A9A
 "}}}
 "Statusline {{{
@@ -183,30 +191,51 @@ nnoremap <leader>u :GundoToggle<cr>
 
 "Abbriviations {{{
     iabbrev ccopy Copy right 2014 Adrian Forsius, all rights reserved.
-    iabbrev @@ adrianforsius@gmail.com
     iabbrev Attr Attributes
     iabbrev Appl Application
+    iabbrev ppp
+    \<CR>print_r('<pre class="awesometest">');
+    \<CR>print_r();
+    \<CR>print_r('</pre>');
 "}}}
 
 "Plugin settings {{{
+    " syntastic {{{
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
+        let g:syntastic_check_on_w = 1
+        let g:syntastic_python_checkers = ['python', 'pylint']
+        "let g:syntastic_python_pylint_rcfile='/home/adrfor1/branches/pysite/utils/pylint.rc'
+
+        "To indent switch-statements properly
+        let g:PHP_vintage_case_default_indent = 1
+    "}}}
     "indentLine {{{
         let g:indentLine_color_term = 239
         let g:indentLine_char = '¦'
     "}}}
     "easyMotion {{{
-        map <leader><leader> <Plug>(easymotion-sn)
+        map <leader><leader>s <Plug>(easymotion-sn)
         "onoremap ctrl-; <Plug>(easymotion-tn)
     "}}}
     "ctrlP {{{
         "CtrlP settings
-        let g:ctrlp_match_window = 'bottom, order:ttb,min:1,max:20,results:20'
+        let g:ctrlp_match_window = 'bottom, order:ttb,min:1,max:8,results:8'
         let g:ctrlp_switch_buffer = 0
-        let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
         let g:ctrlp_working_path_mode = 0
         let g:ctrlp_by_filename = 0
         let g:ctrlp_regexp = 1
         let g:ctrlp_map = '<c-p>'
         let g:ctrlp_cmd = 'CtrlPMixed'
+        let g:path_to_matcher = 'matcher'
+        let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard | grep -v "__init__.py"']
         "Fix to open ctrlp in mixed mode instead of default
     "}}}
     "NerdTree {{{
@@ -221,10 +250,6 @@ nnoremap <leader>u :GundoToggle<cr>
     augroup new_file
         autocmd!
         autocmd BufNewFile *.* :write
-    augroup END
-    augroup new_html
-        autocmd!
-        autocmd BufWritePre,BufRead *.html :normal gg=G
     augroup END
 "}}}
 
@@ -290,29 +315,43 @@ function! Dotfiles(file)
         echom 'No such dotfile'
     endif
 endfunction
-" Parse gitignore
-let filename = '.gitignore'
-if filereadable(filename)
-    let igstring = ''
-    for oline in readfile(filename)
-        let line = substitute(oline, '\s|\n|\r', '', "g")
-        if line =~ '^#' | con | endif
-        if line == '' | con  | endif
-        if line =~ '^!' | con  | endif
-        if line =~ '/$' | let igstring .= "," . line . "*" | con | endif
-        let igstring .= "," . line
-    endfor
-    let execstring = "set wildignore=".substitute(igstring, '^,', '', "g")
-    execute execstring
-endif
 " Use AG instead of grep (fastert) if executeable
 if executable('ag')
     " Note we extract the column as well as the file and line number
     set grepprg=ag\ --nogroup\ --nocolor\ --column
     set grepformat=%f:%l:%c%m
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'ag %s -l --hidden --nocolor -g ""']
 
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
 endif
+function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+    " Create a cache file if not yet exists
+    let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+    if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+        call writefile(a:items, cachefile)
+    endif
+    if !filereadable(cachefile)
+        return []
+    endif
+    " a:mmode is currently ignored. In the
+    " future, we should probably do
+    " something about that. the matcher
+    " behaves like "full-line".
+    let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
+    if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+        let cmd = cmd.'--no-dotfiles '
+    endif
+    let cmd = cmd.a:str
+    return split(system(cmd), "\n")
+endfunction
+" Blocket {{{
+    set path=.;~,/usr/include
+    set includeexpr=substitute(v:fname,'^\\(.*\\)$','templates/\\1.tmpl','g')
+
+    "Improved bconf detection
+    au! BufRead,BufNewFile *.bconf setfiletype bconf
+    " set commentstring for tpope/vim-commentary
+    au FileType bconf set commentstring=#\ %s
+"}}}
