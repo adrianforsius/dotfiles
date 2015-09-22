@@ -1,1 +1,3 @@
 export PATH="$HOME/bin:$HOME/branches/pysite/utils/bin:$PATH"
+export PATH="/usr/texbin:$PATH"
+export PATH="/opt/blocket/bin:$PATH"

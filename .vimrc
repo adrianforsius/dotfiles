@@ -10,7 +10,6 @@
     Plugin 'tpope/vim-surround'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'kien/ctrlp.vim'
-    Plugin 'Yggdroot/indentLine'
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'editorconfig/editorconfig-vim'
     Plugin 'tpope/vim-fugitive'
@@ -18,7 +17,12 @@
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'burke/matcher'
     Plugin 'scrooloose/syntastic'
+    Plugin 'terryma/vim-multiple-cursors'
     Plugin 'git@scmcoord.com:sion.leroux/vim-blocket.git'
+    "Plugin 'mitsuhiko/vim-jinja'
+    "Plugin 'matchit.zip'
+    "Plugin 'jiangmiao/auto-pairs'
+    "Plugin 'docunext/closetag.vim'
     call vundle#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
     "Filetype indent with plugin possibility load after vundle to avoid errors
@@ -26,6 +30,7 @@
 "}}}
 
 "VIm general {{{
+    let g:html_indent_inctags = "html,body,head,tbody"
     "set cursor to always have a distance to borders
     set scrolloff=3
     set fileencoding=utf-8
@@ -89,6 +94,14 @@
 "}}}
 
 "General remapping {{{
+    "format mappings {{{
+        nnoremap <leader>fj :%!python -m json.tool<cr>
+        nnoremap <leader>fh :s/<[^>]*>/\r&\r/g<cr>G=gg<cr>:g/^$/d<cr>
+    "}}}
+    "delete empty lines
+    nnoremap <leader>d= :g/^$/d
+    "HTML newlines
+    nnoremap <leader>r= :s/<[^>]*>/\r&\r/g
     "remove trailing whitespace
     nnoremap <Leader>rtw :%s/\s\+$//e<CR>
     "PHP mappgin
@@ -97,10 +110,6 @@
     nnoremap <leader>n :sav <C-R>=expand("%:p:h") . "/" <CR>
     "Set faster ESC
     inoremap <leader>. <esc>
-    "Tab overrides
-    nnoremap <S-Tab> <<
-    nnoremap <Tab> >>
-    inoremap <S-Tab> <Esc><<i
     "Make space foldopener
     nnoremap <space> za
     "Make so that wrappled line seem like thier own line
@@ -193,13 +202,15 @@ nnoremap <leader>u :GundoToggle<cr>
     iabbrev ccopy Copy right 2014 Adrian Forsius, all rights reserved.
     iabbrev Attr Attributes
     iabbrev Appl Application
-    iabbrev ppp
-    \<CR>print_r('<pre class="awesometest">');
-    \<CR>print_r();
-    \<CR>print_r('</pre>');
+    iabbrev :W :w
+    iabbrev ppp \<CR>print_r('<pre class="awesometest">');\<CR>print_r();\<CR>print_r('</pre>');
 "}}}
 
 "Plugin settings {{{
+    " closetag {{{
+        "set closetag.vim preference
+        let g:closetag_html_style = 1
+    " }}}
     " syntastic {{{
         set statusline+=%#warningmsg#
         set statusline+=%{SyntasticStatuslineFlag()}
@@ -223,6 +234,11 @@ nnoremap <leader>u :GundoToggle<cr>
     "easyMotion {{{
         map <leader><leader>s <Plug>(easymotion-sn)
         "onoremap ctrl-; <Plug>(easymotion-tn)
+        let g:EasyMotion_use_smartsign_us = 1 " US layout
+    "}}}
+    "multicursor {{{
+        let g:multi_cursor_start_key='<C-n>'
+        let g:multi_cursor_start_word_key='g<C-n>'
     "}}}
     "ctrlP {{{
         "CtrlP settings
