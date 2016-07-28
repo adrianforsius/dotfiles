@@ -1,29 +1,31 @@
 "Vundle {{{
     "Set filetype off to avoid errors
     filetype off
-    "set the runtime path to include Vundle and initialize
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-    "let Vundle manage Vundle, required
-    Plugin 'gmarik/Vundle.vim'
-    Plugin 'scrooloose/nerdtree'
-    Plugin 'tpope/vim-surround'
-    Plugin 'scrooloose/nerdcommenter'
-    Plugin 'kien/ctrlp.vim'
-    Plugin 'Lokaltog/vim-easymotion'
-    Plugin 'editorconfig/editorconfig-vim'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'bling/vim-airline'
-    Plugin 'altercation/vim-colors-solarized'
-    Plugin 'burke/matcher'
-    Plugin 'scrooloose/syntastic'
-    Plugin 'terryma/vim-multiple-cursors'
-    Plugin 'git@scmcoord.com:sion.leroux/vim-blocket.git'
-    "Plugin 'mitsuhiko/vim-jinja'
-    "Plugin 'matchit.zip'
-    "Plugin 'jiangmiao/auto-pairs'
-    "Plugin 'docunext/closetag.vim'
-    call vundle#end()
+    call plug#begin('~/.vim/plugged')
+        Plug 'YankRing.vim'
+        Plug 'tpope/vim-surround'
+        Plug 'scrooloose/nerdcommenter'
+        Plug 'kien/ctrlp.vim'
+        Plug 'Lokaltog/vim-easymotion'
+        Plug 'editorconfig/editorconfig-vim'
+        Plug 'tpope/vim-fugitive'
+        Plug 'bling/vim-airline'
+        Plug 'jsx/jsx.vim'
+        Plug 'powerline/fonts'
+        Plug 'altercation/vim-colors-solarized'
+        Plug 'burke/matcher'
+        Plug 'mxw/vim-jsx'
+        Plug 'scrooloose/syntastic'
+        Plug 'mitsuhiko/vim-jinja'
+        Plug 'matchit.zip'
+        Plug 'jiangmiao/auto-pairs'
+        Plug 'docunext/closetag.vim'
+        Plug 'mattn/emmet-vim'
+        Plug 'nvie/vim-flake8'
+        Plug 'junegunn/fzf'
+        Plug 'henrik/vim-indexed-search'
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+    call plug#end()
     "Add bundle ctrlp to runtimepath for .vim to find plugin
     "Filetype indent with plugin possibility load after vundle to avoid errors
     filetype indent plugin on
@@ -49,7 +51,7 @@
     set number
     "Enable white characters
     set list
-    set listchars=tab:→\ ,trail:~,extends:>,precedes:<
+    set listchars=tab:~\ ,trail:~,extends:>,precedes:<
     "Set tabs
     set tabstop=4
     set softtabstop=4
@@ -90,6 +92,8 @@
     set modifiable
     "Update outside changes in file
     set autoread
+    "tags
+    nnoremap <leader>. :tag <c-r><c-w><cr>
     set tags+=tags
 "}}}
 
@@ -97,21 +101,18 @@
     "format mappings {{{
         nnoremap <leader>fj :%!python -m json.tool<cr>
         nnoremap <leader>fh :s/<[^>]*>/\r&\r/g<cr>G=gg<cr>:g/^$/d<cr>
+        "delete empty lines
+        nnoremap <leader>d= :g/^$/d
+        "HTML newlines
+        nnoremap <leader>r= :s/<[^>]*>/\r&\r/g
+        "remove trailing whitespace
+        nnoremap <Leader>rtw :%s/\s\+$//e<CR>
     "}}}
-    "delete empty lines
-    nnoremap <leader>d= :g/^$/d
-    "HTML newlines
-    nnoremap <leader>r= :s/<[^>]*>/\r&\r/g
-    "remove trailing whitespace
-    nnoremap <Leader>rtw :%s/\s\+$//e<CR>
-    "PHP mappgin
-    nnoremap <leader>.j :lnext<CR>
+    "visual selection search
+     vnoremap // y/<C-R>"<CR>"
+    "open/save mappings
     nnoremap <leader>o :e <C-R>=expand("%:p:h") . "/" <CR>
     nnoremap <leader>n :sav <C-R>=expand("%:p:h") . "/" <CR>
-    "Set faster ESC
-    inoremap <leader>. <esc>
-    "Make space foldopener
-    nnoremap <space> za
     "Make so that wrappled line seem like thier own line
     nnoremap j gj
     nnoremap k gk
@@ -121,10 +122,6 @@
     nnoremap <leader>s :mksession<cr> "Future ag-search nnoremap <leader>a :Ag
     nnoremap <leader>W :match Error /\v\s+$/<cr>
     nnoremap <leader>w :%s/\v\s+$//<cr>
-    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-    " bind \ (backward slash) to grep shortcut
-    command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-    nnoremap \ :Ag<SPACE>
     " Easier go to file
     nnoremap <leader>m :cd ~/
     nnoremap <leader>e :e ~/
@@ -153,14 +150,6 @@
     nnoremap <cr> :noh<cr><cr>
 "}}}
 
-"Fold {{{
-    set foldenable
-    "open most folds by default
-    set foldlevelstart=10
-    set foldmethod=indent
-    set foldnestmax=10
-"}}}
-
 "Supposedly this will give an undo tree however Im not sure if working
 nnoremap <leader>u :GundoToggle<cr>
 
@@ -177,12 +166,12 @@ nnoremap <leader>u :GundoToggle<cr>
 
     let g:airline_left_sep=''
     let g:airline_right_sep=''
-    let g:airline_detect_modified=1
-    let g:airline_powerline_fonts=1
     let g:airline_powerline_symbols='fancy'
-    let g:airline_theme='solarized'
     let g:airline#extensions#syntastic#enabled = 1
     let g:airline_section_warning = 'syntastic'
+    hi SpecialKey ctermfg=101 guifg=#649A9A
+
+
     hi SpecialKey ctermfg=101 guifg=#649A9A
 "}}}
 "Statusline {{{
@@ -199,14 +188,20 @@ nnoremap <leader>u :GundoToggle<cr>
 "}}}
 
 "Abbriviations {{{
-    iabbrev ccopy Copy right 2014 Adrian Forsius, all rights reserved.
-    iabbrev Attr Attributes
-    iabbrev Appl Application
     iabbrev :W :w
     iabbrev ppp \<CR>print_r('<pre class="awesometest">');\<CR>print_r();\<CR>print_r('</pre>');
 "}}}
 
 "Plugin settings {{{
+    " auto-pair {{{
+        let g:AutoPairsShortcutFastWrap='<Nop>'
+    " }}}
+    " emmet {{{
+        let g:user_emmet_leader_key='<C-s>'
+    " }}}
+    " yankring {{{
+        nnoremap <leader>ys :YRShow<cr>
+    " }}}
     " closetag {{{
         "set closetag.vim preference
         let g:closetag_html_style = 1
@@ -251,7 +246,6 @@ nnoremap <leader>u :GundoToggle<cr>
         let g:ctrlp_cmd = 'CtrlPMixed'
         let g:path_to_matcher = 'matcher'
         let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-        let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard | grep -v "__init__.py"']
         "Fix to open ctrlp in mixed mode instead of default
     "}}}
     "NerdTree {{{
@@ -262,47 +256,6 @@ nnoremap <leader>u :GundoToggle<cr>
     "}}}
 "}}}
 
-"Auto commands new files {{{
-    augroup new_file
-        autocmd!
-        autocmd BufNewFile *.* :write
-    augroup END
-"}}}
-
-"Auto commands for filetype buffer {{{
-    augroup buffer_javascript
-        autocmd!
-        autocmd FileType javascript :iabbrev <buffer> iff if ()<left>
-    augroup END
-    augroup buffer_php
-        autocmd!
-    augroup END
-    augroup buffer_python
-        autocmd!
-    augroup END
-"}}}
-
-"Working directory {{{
-    "augroup setWorkingDirectory
-        "autocmd!
-        "autocmd BufEnter * lcd %:p:h
-    "augroup END
-"}}}
-
-"Commenting {{{
-    "augroup commenting
-        "autocmd!
-        "Commenting blocks of code.
-        "autocmd FileType c,cpp,java,scala,javascript,php let b:comment_leader = '// '
-        "autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-        "autocmd FileType conf,fstab       let b:comment_leader = '# '
-        "autocmd FileType tex              let b:comment_leader = '% '
-        "autocmd FileType mail             let b:comment_leader = '> '
-        "autocmd FileType vim              let b:comment_leader = '"'
-        "noremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-        "noremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
-    "augroup END
-"}}}
 "Vim util {{{
     function! RefreshUI()
         if exists(':AirlineRefresh')
@@ -320,24 +273,13 @@ nnoremap <leader>u :GundoToggle<cr>
     augroup END
 "}}}
 
-" Functions
-function! Dotfiles(file)
-    if filereadable($HOME."/".a:file)
-        let homefile = $HOME."/".a:file
-        let dotfile = $DOTFILES."/".a:file
-        execute ":e ".homefile
-        execute ":vert diffsplit ".dotfile
-    else
-        echom 'No such dotfile'
-    endif
-endfunction
 " Use AG instead of grep (fastert) if executeable
 if executable('ag')
     " Note we extract the column as well as the file and line number
     set grepprg=ag\ --nogroup\ --nocolor\ --column
     set grepformat=%f:%l:%c%m
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'ag %s -l --hidden --nocolor -g ""']
+    let g:ctrlp_user_command = ['upfind -name ".git/"', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'ag %s -l --hidden --nocolor -g ""']
 
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
@@ -370,4 +312,12 @@ endfunction
     au! BufRead,BufNewFile *.bconf setfiletype bconf
     " set commentstring for tpope/vim-commentary
     au FileType bconf set commentstring=#\ %s
+"}}}
+" Blocket {{{
+    xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+    function! ExecuteMacroOverVisualRange()
+      echo "@".getcmdline()
+      execute ":'<,'>normal @".nr2char(getchar())
+    endfunction
 "}}}

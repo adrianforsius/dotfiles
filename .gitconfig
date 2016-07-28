@@ -3,11 +3,26 @@
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
+	# Go to previous branch
+	b = "!f() { git checkout @{-$1}; }; f"
+
+	# the upstream branch
+	publish = "!git push -u origin $(git branch-name)"
+
+	# Delete the remote version of the current branch
+	unpublish = "!git push origin :$(git branch-name)"
+
+	# Diff current branch agains branch
+	review = "!f() { git diff $(git branch-name)..$1; }; f"
+
 	# View the current working tree status using the short format
 	s = status -s
 
 	# Show the diff between the latest commit and the current state
 	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+	# unstage
+	unstage = reset HEAD
 
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
@@ -159,5 +174,5 @@
 
 	insteadOf = "gist:"
 [user]
-	email = adrianforsius@gmail.com
-	name = adrianforsius
+	email = "adrianforsius@gmail.com"
+	name = "Adrian Forsius"
