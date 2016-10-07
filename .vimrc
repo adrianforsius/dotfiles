@@ -1,5 +1,5 @@
-"Vundle {{{
-    "Set filetype off to avoid errors
+" Plug-vim {{{
+    " Set filetype off to avoid errors
     filetype off
     call plug#begin('~/.vim/plugged')
         Plug 'YankRing.vim'
@@ -24,140 +24,168 @@
         Plug 'nvie/vim-flake8'
         Plug 'junegunn/fzf'
         Plug 'henrik/vim-indexed-search'
+        Plug 'tell-k/vim-autopep8'
+
+        " HOMELINE
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
     call plug#end()
-    "Add bundle ctrlp to runtimepath for .vim to find plugin
-    "Filetype indent with plugin possibility load after vundle to avoid errors
+    " Filetype indent with plugin possibility load after vundle to avoid errors
     filetype indent plugin on
-"}}}
+" }}}
 
-"VIm general {{{
+" VIm general {{{
     let g:html_indent_inctags = "html,body,head,tbody"
-    "set cursor to always have a distance to borders
+    " set cursor to always have a distance to borders
     set scrolloff=3
     set fileencoding=utf-8
     set encoding=utf-8
-    "set clpboard
+    " set clpboard
     set clipboard=unnamed
-    "be iMproved, required
+    " be iMproved, required
     set nocompatible
-    "Keep indent when creating new line
+    " Keep indent when creating new line
     set autoindent
-    "Activate basic indention
+    " Activate basic indention
     set smartindent
-    "Set $MYVIMRC
+    " Set $MYVIMRC
     let $MYVIMRC = "$HOME/.vimrc"
-    "Enable line-number
+    " Enable line-number
     set number
-    "Enable white characters
+    " Enable white characters
     set list
     set listchars=tab:~\ ,trail:~,extends:>,precedes:<
-    "Set tabs
+    " Set tabs
     set tabstop=4
     set softtabstop=4
     set shiftwidth=4
-    "Set backspace to more logically use (delete)
+    " Set backspace to more logically use (delete)
     set backspace=2
-    "tabs are spaces
+    " tabs are spaces
     set expandtab
-    "Enable cmd
+    " Enable cmd
     set showcmd
     set hidden
     set cursorline
-    "cycle tru alternatives
+    " cycle tru alternatives
     set wildmenu
     set wildmode=longest,list
-    "vim redraw only when need to
+    " vim redraw only when need to
     set lazyredraw
-    "bracket highlighting
+    " bracket highlighting
     set showmatch
     set incsearch
-    "Set leaders
+    " Set leaders
     let mapleader=","
     let maplocalleader="-"
-    "Backup
+    " Backup
     set backup
     set backupdir=~/.vim-tmp,~/.vim/.tmp,~/tmp,/var/tmp,/tmp
     set backupskip=/tmp/*,/private/tmp/*
     set directory=~/.vim-tmp,~/.vim/.tmp,~/tmp,/var/tmp,/tmp
-    "Vim basic ignore windows paths and linux paths if cygwin
+    " Vim basic ignore windows paths and linux paths if cygwin
     set wildignore+=*/tmp/*,*/target/*,*/node_modules/*,*.so,*.swp,*.zip
     set wildignore+=*\\tmp\\*,*\\target\\*,*.swp,*.zip,*.exe
-    "enable local .vimrc configs
+    " enable local .vimrc configs
     set exrc
-    "Wrap
+    " Wrap
     set wrap
     set nolinebreak
-    "Enable fileformat-change
+    " Enable fileformat-change
     set modifiable
-    "Update outside changes in file
+    " Update outside changes in file
     set autoread
-    "tags
+    " tags
     nnoremap <leader>. :tag <c-r><c-w><cr>
     set tags+=tags
-"}}}
+" }}}
 
-"General remapping {{{
-    "format mappings {{{
+" General remapping {{{
+    " format mappings {{{
+        " JSON
         nnoremap <leader>fj :%!python -m json.tool<cr>
+        " HTML
         nnoremap <leader>fh :s/<[^>]*>/\r&\r/g<cr>G=gg<cr>:g/^$/d<cr>
-        "delete empty lines
+        " delete empty lines
         nnoremap <leader>d= :g/^$/d
-        "HTML newlines
+        " HTML newlines
         nnoremap <leader>r= :s/<[^>]*>/\r&\r/g
-        "remove trailing whitespace
-        nnoremap <Leader>rtw :%s/\s\+$//e<CR>
-    "}}}
-    "visual selection search
+        " remove trailing whitespace
+        nnoremap <Leader>ttw :%s/\s\+$//e<CR>
+    " }}}
+    " Hackery for swedish keyboards to not go mad
+    nnoremap <leader>pp :setlocal paste!<cr>
+
+    inoremap <Tab> <esc>
+    inoremap <Tab><Tab> <esc>
+    vnoremap <Tab>, ]
+    nnoremap <Tab>, ]
+    inoremap <Tab>, ]
+    vnoremap <Tab>. [
+    nnoremap <Tab>. [
+    inoremap <Tab>. [
+    vnoremap <Tab>' ^
+    nnoremap <Tab>' ^
+    inoremap <Tab>' ^
+    vnoremap <Tab>- /
+    nnoremap <Tab>- /
+    inoremap <Tab>- /
+    vnoremap <Tab>ä \
+    nnoremap <Tab>ä \
+    inoremap <Tab>ä \
+    vnoremap <Tab>ö $
+    nnoremap <Tab>ö $
+    inoremap <Tab>ö $
+    vnoremap <Tab>å @
+    nnoremap <Tab>å @
+    inoremap <Tab>å @
+    " faster indenting
+    nnoremap <leader>< <<
+    nnoremap <leader>> >>
+    " visual selection search
      vnoremap // y/<C-R>"<CR>"
-    "open/save mappings
+    " open/save mappings
     nnoremap <leader>o :e <C-R>=expand("%:p:h") . "/" <CR>
     nnoremap <leader>n :sav <C-R>=expand("%:p:h") . "/" <CR>
-    "Make so that wrappled line seem like thier own line
+    " Make so that wrappled line seem like thier own line
     nnoremap j gj
     nnoremap k gk
-    "Open vimrc settings
+    " Open vimrc settings
     nnoremap <leader>sv :split $MYVIMRC<cr>
-    "Save session with window setup
-    nnoremap <leader>s :mksession<cr> "Future ag-search nnoremap <leader>a :Ag
+    " Save session with window setup
+    nnoremap <leader>s :mksession<cr> " Future ag-search nnoremap <leader>a :Ag
     nnoremap <leader>W :match Error /\v\s+$/<cr>
     nnoremap <leader>w :%s/\v\s+$//<cr>
-    " Easier go to file
-    nnoremap <leader>m :cd ~/
-    nnoremap <leader>e :e ~/
-    nnoremap <leader>d :vert diffsplit ~/
-    " Simplifying windo movement
+    "  Remap goto vim function cuz of swedish keyboard
+    nnoremap oo <C-]>
+    "  Simplifying windo movement
     noremap <C-h> <C-w>h
     noremap <C-j> <C-w>j
     noremap <C-k> <C-w>k
     noremap <C-l> <C-w>l
-    "Always search in very magic mode
+    " Always search in very magic mode
     nnoremap / /\v
     nnoremap <leader>yy :set nonumber!<CR>:set list!<CR>
-"}}}
+" }}}
 
-
-
-
-"Search {{{
-    "Searching parameters to search for case sensitive only when using capital
-    "letters
+" Search {{{
+    " Searching parameters to search for case sensitive only when using capital
+    " letters
     set ignorecase
     set smartcase
-    "When using search by /
+    " When using search by /
     set hlsearch
-    "Enter after search will cancel highlighting
+    " Enter after search will cancel highlighting
     nnoremap <cr> :noh<cr><cr>
-"}}}
+" }}}
 
-"Supposedly this will give an undo tree however Im not sure if working
+" Supposedly this will give an undo tree however Im not sure if working
 nnoremap <leader>u :GundoToggle<cr>
 
-"Color/Theme {{{
-    "Enable colorscheme
+" Color/Theme {{{
+    " Enable colorscheme
     colorscheme solarized
-    "hi NonText term=bold cterm=bold ctermfg=1 gui=bold guifg=Black
-    "hi SpecialKey ctermfg=black
+    " hi NonText term=bold cterm=bold ctermfg=1 gui=bold guifg=Black
+    " hi SpecialKey ctermfg=black
     syntax on
     set background=dark
     set t_Co=256
@@ -170,29 +198,20 @@ nnoremap <leader>u :GundoToggle<cr>
     let g:airline#extensions#syntastic#enabled = 1
     let g:airline_section_warning = 'syntastic'
     hi SpecialKey ctermfg=101 guifg=#649A9A
-
-
-    hi SpecialKey ctermfg=101 guifg=#649A9A
-"}}}
-"Statusline {{{
-    "first, enable status line always
+" }}}
+" Statusline {{{
+    " first, enable status line always
     set noruler
     set laststatus=2
-"}}}
+" }}}
 
-"surrondings {{{
-    nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-    nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-    nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>lel
-    nnoremap <leader>[ viw<esc>a]<esc>hbi[<esc>lel
-"}}}
-
-"Abbriviations {{{
-    iabbrev :W :w
+" Abbriviations {{{
     iabbrev ppp \<CR>print_r('<pre class="awesometest">');\<CR>print_r();\<CR>print_r('</pre>');
-"}}}
+" }}}
 
-"Plugin settings {{{
+" Plugin settings {{{
+    " NERDComments set proper vim comments fomat
+    let g:NERDCustomDelimiters = { 'vim': { 'left': '" '  }  }
     " auto-pair {{{
         let g:AutoPairsShortcutFastWrap='<Nop>'
     " }}}
@@ -203,7 +222,7 @@ nnoremap <leader>u :GundoToggle<cr>
         nnoremap <leader>ys :YRShow<cr>
     " }}}
     " closetag {{{
-        "set closetag.vim preference
+        " set closetag.vim preference
         let g:closetag_html_style = 1
     " }}}
     " syntastic {{{
@@ -216,47 +235,38 @@ nnoremap <leader>u :GundoToggle<cr>
         let g:syntastic_check_on_open = 1
         let g:syntastic_check_on_wq = 0
         let g:syntastic_check_on_w = 1
-        let g:syntastic_python_checkers = ['python', 'pylint']
-        "let g:syntastic_python_pylint_rcfile='/home/adrfor1/branches/pysite/utils/pylint.rc'
+        let g:syntastic_aggregate_errors = 1
+        let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
+        let g:syntastic_php_checkers = ['phpcs']
+        " let g:syntastic_python_pylint_rcfile='/home/adrfor1/branches/pysite/utils/pylint.rc'
 
-        "To indent switch-statements properly
+        " To indent switch-statements properly
         let g:PHP_vintage_case_default_indent = 1
-    "}}}
-    "indentLine {{{
+    " }}}
+    " indentLine {{{
         let g:indentLine_color_term = 239
         let g:indentLine_char = '¦'
-    "}}}
-    "easyMotion {{{
+    " }}}
+    " easyMotion {{{
         map <leader><leader>s <Plug>(easymotion-sn)
-        "onoremap ctrl-; <Plug>(easymotion-tn)
+        " onoremap ctrl-; <Plug>(easymotion-tn)
         let g:EasyMotion_use_smartsign_us = 1 " US layout
-    "}}}
-    "multicursor {{{
-        let g:multi_cursor_start_key='<C-n>'
-        let g:multi_cursor_start_word_key='g<C-n>'
-    "}}}
-    "ctrlP {{{
-        "CtrlP settings
+    " }}}
+    " ctrlP {{{
+        " CtrlP settings
         let g:ctrlp_match_window = 'bottom, order:ttb,min:1,max:8,results:8'
-        let g:ctrlp_switch_buffer = 0
+        let g:ctrlp_switch_buffer = 1
         let g:ctrlp_working_path_mode = 0
         let g:ctrlp_by_filename = 0
-        let g:ctrlp_regexp = 1
         let g:ctrlp_map = '<c-p>'
-        let g:ctrlp_cmd = 'CtrlPMixed'
+        let g:ctrlp_cmd = 'CtrlPMRU'
         let g:path_to_matcher = 'matcher'
         let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-        "Fix to open ctrlp in mixed mode instead of default
-    "}}}
-    "NerdTree {{{
-        "autocmd VimEnter * NERDTree
-        let g:NERDTreeWinSize = 45
-        let g:NERDTreeShowLineNumbers = 1
-        let g:NERDTreeChDirMode       = 2
-    "}}}
-"}}}
+        " Fix to open ctrlp in mixed mode instead of default
+    " }}}
+" }}}
 
-"Vim util {{{
+" Vim util {{{
     function! RefreshUI()
         if exists(':AirlineRefresh')
             AirlineRefresh
@@ -271,7 +281,7 @@ nnoremap <leader>u :GundoToggle<cr>
         autocmd!
         autocmd BufWritePost .vimrc,_vimrc,vimrmrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | :call RefreshUI()
     augroup END
-"}}}
+" }}}
 
 " Use AG instead of grep (fastert) if executeable
 if executable('ag')
@@ -308,11 +318,11 @@ endfunction
     set path=.;~,/usr/include
     set includeexpr=substitute(v:fname,'^\\(.*\\)$','templates/\\1.tmpl','g')
 
-    "Improved bconf detection
+    " Improved bconf detection
     au! BufRead,BufNewFile *.bconf setfiletype bconf
-    " set commentstring for tpope/vim-commentary
+    "  set commentstring for tpope/vim-commentary
     au FileType bconf set commentstring=#\ %s
-"}}}
+" }}}
 " Blocket {{{
     xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
@@ -320,4 +330,4 @@ endfunction
       echo "@".getcmdline()
       execute ":'<,'>normal @".nr2char(getchar())
     endfunction
-"}}}
+" }}}

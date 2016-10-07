@@ -1,97 +1,138 @@
-# Install command-line tools using Homebrew
-# Usage: `brew bundle Brewfile`
-
-# Make sure we’re using the latest Homebrew
-update
-
-# Upgrade any already-installed formulae
-upgrade
-
-# Install GNU core utilities (those that come with OS X are outdated)
-# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-install coreutils
-#sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
-
-# Install some other useful utilities like `sponge`
-install moreutils
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
-install findutils
-# Install GNU `sed`, overwriting the built-in `sed`
-install gnu-sed --default-names
-# Install Bash 4
-# Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
-install bash
-install bash-completion
-
-# Install wget with IRI support
-install wget --enable-iri
-
-# Install RingoJS and Narwhal
-# Note that the order in which these are installed is important; see http://git.io/brew-narwhal-ringo.
-#install ringojs
-#install narwhal
-
-# Install more recent versions of some OS X tools
-install vim --override-system-vi
-install homebrew/dupes/grep
-install homebrew/dupes/screen
-install homebrew/php/php55 --with-gmp
-
-# Install some CTF tools; see https://github.com/ctfs/write-ups
-# install bfg
-# install binutils
-# install binwalk
-# install cifer
-# install dex2jar
-# install dns2tcp
-# install fcrackzip
-# install foremost
-# install hashpump
-# install hydra
-# install john
-# install knock
-# install nmap
-# install pngcheck
-# install sqlmap
-# install tcpflow
-# install tcpreplay
-# install tcptrace
-# install ucspi-tcp # `tcpserver` et al.
-# install xpdf
-# install xz
-
-# Install other useful binaries
-install ack
-#install exiv2
-install git
-install imagemagick --with-webp
-install lynx
-install node # This installs `npm` too using the recommended installation method
-install p7zip
-install pigz
-install pv
-install rename
-install rhino
-install tree
-install webkit2png
-install zopfli
-install ctags
-install irssi
-install jsmin
-install mysql
-install openssl
-install python
-install ruby
-install tree
-install vim
-install wget
-install wemux
-install tmux
-install watch
-install postgresql
-
-
-install homebrew/versions/lua52
-
-# Remove outdated versions from the cellar
-cleanup
+tap 'caskroom/cask'
+tap 'homebrew/bundle'
+tap 'homebrew/core'
+tap 'homebrew/dupes'
+tap 'homebrew/games'
+tap 'homebrew/php'
+tap 'homebrew/services'
+tap 'homebrew/versions'
+cask 'java'
+cask 'xquartz'
+brew 'ack'
+brew 'readline'
+brew 'bash'
+brew 'bash-completion'
+brew 'freetype', args: ['universal']
+brew 'pkg-config'
+brew 'fontconfig', args: ['universal']
+brew 'gettext'
+brew 'libffi'
+brew 'pcre'
+brew 'glib'
+brew 'pixman'
+brew 'cairo'
+brew 'gmp'
+brew 'libtasn1', args: ['universal']
+brew 'nettle'
+brew 'gnutls'
+brew 'jpeg', args: ['universal']
+brew 'git'
+brew 'gobject-introspection'
+brew 'libtiff', args: ['universal']
+brew 'shared-mime-info'
+brew 'gdk-pixbuf'
+brew 'libcroco'
+brew 'icu4c'
+brew 'harfbuzz'
+brew 'pango'
+brew 'librsvg'
+brew 'libtool', args: ['universal']
+brew 'little-cms2', args: ['universal']
+brew 'webp', args: ['universal']
+brew 'imagemagick', args: ['with-webp']
+brew 'cask'
+brew 'coreutils'
+brew 'ctags'
+brew 'go'
+brew 'docker'
+brew 'docker-machine'
+brew 'libyaml'
+brew 'docker-compose'
+brew 'makedepend'
+brew 'openssl', args: ['universal']
+brew 'elinks'
+brew 'lame'
+brew 'x264'
+brew 'xvid'
+brew 'ffmpeg'
+brew 'findutils'
+brew 'fzf'
+brew 'gd', args: ['universal']
+brew 'gdbm'
+brew 'gnu-sed', args: ['with-default-names']
+brew 'irssi'
+brew 'jsmin'
+brew 'libevent'
+brew 'libusb', args: ['universal']
+brew 'libusb-compat', args: ['universal']
+brew 'libgphoto2', args: ['universal']
+brew 'libicns', args: ['universal']
+brew 'libidn'
+brew 'sqlite'
+brew 'python'
+brew 'libxml2'
+brew 'mhash'
+brew 'mcrypt'
+brew 'mongodb'
+brew 'moreutils'
+brew 'mtr'
+brew 'mysql'
+brew 'nginx', service_restart: true
+brew 'node'
+brew 'p7zip'
+brew 'pdftohtml'
+brew 'pigz'
+brew 'python3'
+brew 'postgresql', service_restart: true
+brew 'pv'
+brew 'pyenv'
+brew 'rename'
+brew 'rhino'
+brew 'ruby'
+brew 'tmux'
+brew 'tree'
+brew 'unixodbc'
+brew 'unrar'
+brew 'vim'
+brew 'watch'
+brew 'wget', args: ['with-iri']
+brew 'wine'
+brew 'winetricks'
+brew 'zopfli'
+brew 'homebrew/dupes/grep'
+brew 'homebrew/dupes/less'
+brew 'homebrew/dupes/screen'
+brew 'homebrew/games/nethack'
+brew 'homebrew/php/php55', args: ['with-gmp']
+brew 'homebrew/php/php56'
+brew 'homebrew/php/php56-mcrypt'
+brew 'homebrew/php/php71'
+brew 'homebrew/php/phpmyadmin'
+brew 'homebrew/php/wp-cli'
+cask 'battle-net'
+cask 'docker'
+cask 'docker-compose'
+cask 'dockertoolbox'
+cask 'dropbox'
+cask 'filezilla'
+cask 'firefox'
+cask 'flux'
+cask 'gimp'
+cask 'github-desktop'
+cask 'google-chrome'
+cask 'google-drive'
+cask 'iterm2'
+cask 'libreoffice'
+cask 'mactex'
+cask 'sketch'
+cask 'slack'
+cask 'spectacle'
+cask 'spotify'
+cask 'sublime-text'
+cask 'transmission'
+cask 'tunnelblick'
+cask 'unrarx'
+cask 'vagrant'
+cask 'virtualbox'
+cask 'vlc'
+cask 'zeplin'
